@@ -73,12 +73,13 @@ def gen_xes_log_dev(events_lists):
     startTime = datetime.datetime.now(datetime.timezone.utc)
 
     log = xes.Log()
-    for trace, deviance in traces:
+    for i, (trace, deviance) in enumerate(traces):
         currentTime = startTime
         t = gen_trace(trace, deviance)
 
+        t.add_attribute(xes.Attribute(type="string", key="concept:name", value="trace_" + str(i)))
         log.add_trace(t)
-    
+            
     log.add_global_event_attribute(xes.Attribute(type="date", key="time:timestamp", value=startTime.astimezone().isoformat()))
 
     open("multi.xes", "w").write(str(log))
