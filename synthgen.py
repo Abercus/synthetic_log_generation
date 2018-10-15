@@ -78,9 +78,12 @@ def gen_xes_log_dev(events_lists):
         t = gen_trace(trace, deviance)
 
         t.add_attribute(xes.Attribute(type="string", key="concept:name", value="trace_" + str(i)))
+       
+        t.add_attribute(xes.Attribute(type="int", key="Label", value=str(1) if deviance else str(0)))
         log.add_trace(t)
             
     log.add_global_event_attribute(xes.Attribute(type="date", key="time:timestamp", value=startTime.astimezone().isoformat()))
+    log.add_global_trace_attributes(xes.Attribute(type="int", key="Label", value="0"))
 
     open("multi.xes", "w").write(str(log))
 
@@ -151,27 +154,35 @@ def gen_set_deviance_mining_log(activities_count=20):
     gen_xes_log_dev(inp_logs)
 
 
-def gen_multiple_log(activities_count=20):
+def gen_multiple_log(activities_count=8):
     # process is deviant if there are several activities included, each activity takes 2x the time then
     alphabet = generate_alphabet(activities_count)
 
     deviant = alphabet[:]
-    random.shuffle(deviant)
+    ##random.shuffle(deviant)
 
     # pick a set of activities
-    causes = random.sample(deviant, 3)
+    causes = random.sample(deviant, 2)
+    #causes = [deviant[3]]
+
 
     inp_logs = []
     print(causes) 
     # remove the cause from non-deviant trace
     
-    for _ in range(2000):
+    for _ in range(10):
         # pick one cause and remove it
-        cause = random.choice(causes)
-        inp_logs.append(([x for x in deviant if x != cause], False))
-
-    for _ in range(40):
+        #cause = random.choice(causes)
+        #inp_logs.append(([x for x in deviant if x != cause], False))
+        inp_logs.append(([x for x in deviant if x not in causes], False))
+    
+    for _ in range(10):
         inp_logs.append((deviant, True))
+
+    for c in causes:
+        for _ in range(10):
+            inp_logs.append(([x for x in deviant if x != c], False))
+
 
 
     random.shuffle(inp_logs)
