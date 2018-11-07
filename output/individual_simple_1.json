@@ -1,0 +1,12 @@
+{
+    "pattern_type": "activity",
+    "rules": [{
+        "confidence": 1,
+        "name": "rule0",
+        "occurrence conditions": [{
+            "condition": "> 0.0",
+            "event": "activity_6"
+        }],
+        "support": 100
+    }]
+}

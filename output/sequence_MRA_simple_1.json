@@ -1,0 +1,12 @@
+{
+    "pattern_type": "sequence",
+    "rules": [{
+        "confidence": 1,
+        "name": "rule0",
+        "occurrence conditions": [{
+            "condition": "> 0.0",
+            "events": ["activity_6-COMPLETE"]
+        }],
+        "support": 100
+    }]
+}

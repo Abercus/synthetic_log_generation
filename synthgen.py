@@ -17,23 +17,6 @@ import xes
 import random
 import datetime
 
-"""
-Markov Model
-It is a good way to model process flow.. We can have different models for deviant and non-deviant cases
-
-"""
-
-class MM:
-    def __init__(self):
-        pass
-
-
-
-class MM_node:
-    def __init__(self):
-        pass
-
-
 
 
 def gen_xes_log(events_lists, deviant):
@@ -68,7 +51,7 @@ def gen_xes_log(events_lists, deviant):
 
 
 def gen_xes_log_dev(events_lists):
-    traces = [([{"concept:name" : e, "org:resource" : str(d), "lifecycle:transition" : "complete"} for e in events_list], d) for events_list, d in events_lists]
+    traces = [([{"concept:name" : e, "org:resource" : "actor", "lifecycle:transition" : "complete"} for e in events_list], d) for events_list, d in events_lists]
 
     startTime = datetime.datetime.now(datetime.timezone.utc)
 
@@ -90,9 +73,7 @@ def gen_xes_log_dev(events_lists):
 
 
 
-"""
-Real basic log generation
-"""
+
 
 def gen_trace(trace, deviant):
     startTime = datetime.datetime.now(datetime.timezone.utc)
@@ -154,7 +135,7 @@ def gen_set_deviance_mining_log(activities_count=20):
     gen_xes_log_dev(inp_logs)
 
 
-def gen_multiple_log(activities_count=8):
+def gen_multiple_log(activities_count=20):
     # process is deviant if there are several activities included, each activity takes 2x the time then
     alphabet = generate_alphabet(activities_count)
 
@@ -170,7 +151,7 @@ def gen_multiple_log(activities_count=8):
     print(causes) 
     # remove the cause from non-deviant trace
     
-    for _ in range(10):
+    for _ in range(20):
         # pick one cause and remove it
         #cause = random.choice(causes)
         #inp_logs.append(([x for x in deviant if x != cause], False))
@@ -204,7 +185,7 @@ def gen_deviance_mining_log(activities_count=20):
 
     # therefore deviant one has this one extra activity
 
-    # time taken by activity is 30 min, all othera activities 5 min
+    # time taken by activity is 30 min, all others activities 5 min
 
     inp_logs = []
     # 10 non deviant
@@ -219,10 +200,6 @@ def gen_deviance_mining_log(activities_count=20):
 
     gen_xes_log(inp_logs, random_act)    
 
-
-
-def generate_synthetic_log(activities=None):
-    pass
 
 
 def main():
