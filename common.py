@@ -10,8 +10,11 @@ import datetime
 
 class LogGenerator:
 
-    def __init__(self, traces=[]):
-        self.traces = traces
+    def __init__(self, traces=None):
+        if not traces:
+            self.traces = []
+        else:
+            self.traces = traces
 
     def add_trace(self, trace):
         self.traces.append(trace)
@@ -22,7 +25,6 @@ class LogGenerator:
         for trace in self.traces:
             xes_trace = create_xes_trace(trace)
             log.add_trace(xes_trace)
-
 
 
         return log

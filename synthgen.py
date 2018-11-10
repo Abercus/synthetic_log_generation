@@ -57,7 +57,6 @@ def gen_xes_log_dev(events_lists):
 
     log = xes.Log()
     for i, (trace, deviance) in enumerate(traces):
-        currentTime = startTime
         t = gen_trace(trace, deviance)
 
         t.add_attribute(xes.Attribute(type="string", key="concept:name", value="trace_" + str(i)))
